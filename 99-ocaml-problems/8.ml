@@ -7,8 +7,13 @@ Eliminate Duplicates
 
 *)
 
+let rec find_result x = function
+  | [] -> false
+  | h :: t -> if h = x then true else find_result x t
+
+
 let compress l =
   let rec aux acc = function
-    | [] -> []
-    | h :: t -> if List.find (fun x -> String.equal h x) acc then aux acc t else aux (h :: acc) t
+    | [] -> List.rev acc
+    | h :: t -> if find_result h acc then aux acc t else aux (h :: acc) t
 in aux [] l
